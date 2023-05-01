@@ -11,4 +11,5 @@
     <color name="nct">#79f116</color>
     <color name="dark_nct">#60c60c</color>
     <color name="transparent">#00000000</color>
+    <color name="app_background">#222222</color>
 </resources>

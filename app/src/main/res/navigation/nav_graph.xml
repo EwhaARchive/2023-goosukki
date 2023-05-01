@@ -18,7 +18,15 @@
         android:id="@+id/uploadPost2Fragment"
         android:name="capstone.part1.goosukki.UploadPost2Fragment"
         android:label="fragment_upload_post2"
-        tools:layout="@layout/fragment_upload_post2" />
+        tools:layout="@layout/fragment_upload_post2" >
+        <action
+            android:id="@+id/action_uploadPost2Fragment_to_uploadPost1Fragment"
+            app:destination="@id/uploadPost1Fragment" />
+        <!--   툴바에 있는 뒤로 가기 버튼 클릭 시 나오는 액션     -->
+        <action
+            android:id="@+id/actionBack"
+            app:destination="@id/uploadPost1Fragment" />
+    </fragment>
     <fragment
         android:id="@+id/uploadPost3Fragment"
         android:name="capstone.part1.goosukki.UploadPost3Fragment"
