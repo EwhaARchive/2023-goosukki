@@ -12,6 +12,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import capstone.part1.goosukki.databinding.ActivityJoinBinding
 import capstone.part1.goosukki.databinding.ActivityMainBinding
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -63,10 +65,18 @@ class JoinActivity : AppCompatActivity() {
 
     // 아이디 중복확인 결과 받아오는 함수
     private fun DuplicateIdApiRequest(idInput : String) {
-        // 1. retrofit 객체 생성 - baseURL을 어떻게 해야할지..
+        // 1. retrofit 객체 생성
+        // - baseURL(로컬 서버의 경우)은 현재 서버 코드에 접속하고 있는 IPv4 주소로 설정
+        // 로깅 인터셉터 추가
         val retrofit = Retrofit.Builder()
-            .baseUrl("localhost:3000")
+            .baseUrl("http://10.200.29.137:8080")
             .addConverterFactory(GsonConverterFactory.create())
+            .client(
+                OkHttpClient.Builder()
+                    .addInterceptor(
+                        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+                    ).build()
+            )
             .build()
 
         // 2. service 객체 생성
@@ -81,24 +91,27 @@ class JoinActivity : AppCompatActivity() {
             override fun onResponse(call: Call<Duplicate>, response: Response<Duplicate>) {
                 if (response.isSuccessful) {
                     // 응답 내용(body)을 Duplicate 객체로 가져옴
-                    val isDuplicate = response.body()
-                    if (isDuplicate != null && isDuplicate.success) {
+                    val duplicate = response.body()
+                    if (duplicate != null && duplicate.success) {
                         // 아이디 중복체크 성공
-                        Toast.makeText(this@JoinActivity, "성공!!!!!", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@JoinActivity, "성공!!!", Toast.LENGTH_LONG).show()
                     } else {
                         // 아이디 중복체크 실패
-                        Toast.makeText(
-                            this@JoinActivity, "아이디를 다시 설정해주세요", Toast.LENGTH_SHORT)
-                            .show()
+                        Toast.makeText(this@JoinActivity, "아이디를 다시 설정해주세요", Toast.LENGTH_LONG).show()
                     }
                 } else {
                     // 서버 응답 실패
-                    Toast.makeText(this@JoinActivity, "서버 응답 실패", Toast.LENGTH_SHORT).show()
+                    val errorMessage = response.errorBody()?.string() ?: "Unknown error"
+                    val responseCode = response.code()
+                    Log.d("joinActivity", "$responseCode $errorMessage")
+                    Toast.makeText(this@JoinActivity, "서버 응답 실패 ($responseCode): $errorMessage", Toast.LENGTH_LONG).show()
                 }
             }
 
             override fun onFailure(call: Call<Duplicate>, t: Throwable) {
                 // 네트워크 실패
+                Log.e("JoinActivity", "Network request failed", t)
+                Toast.makeText(this@JoinActivity, "네트워크 실패", Toast.LENGTH_LONG).show()
             }
         })
     }
