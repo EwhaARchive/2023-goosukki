@@ -17,7 +17,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         // 게시글 업로드 버튼 클릭 시 UploadPostActivity 실행
         binding.uploadPostStartButton.setOnClickListener {
             activity?.let {
-                val intent = Intent(it, UploadPostActivity::class.java)
+                val intent = Intent(it, PostUploadActivity::class.java)
                 startActivity(intent)
             }
         }
