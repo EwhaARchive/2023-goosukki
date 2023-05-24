@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,6 +31,7 @@ import capstone.part1.goosukki.ui.theme.Nct
 
 @Composable
 fun FirstUploadScreen(navController: NavController) {
+
 
     val titleTextStyle = TextStyle(
         color = Color.White,
@@ -48,6 +50,8 @@ fun FirstUploadScreen(navController: NavController) {
             .padding(vertical = it.calculateBottomPadding())
         ) {
 
+            val textState = remember { mutableStateOf(TextFieldValue()) }
+
             // 제목
             Text(
                 text = "제목",
@@ -58,11 +62,11 @@ fun FirstUploadScreen(navController: NavController) {
 
             // 제목 입력 창
             TextField(
-                value = "",
+                value = textState.value,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 20.dp),
-                onValueChange = {},
+                onValueChange = { textState.value = it },
                 colors = TextFieldDefaults.textFieldColors(
                     backgroundColor = Color.Transparent,
                     textColor = Color.White,
@@ -113,7 +117,7 @@ fun FirstUploadScreen(navController: NavController) {
 fun MultiToggleButton(
     onItemSelected: (Boolean) -> Unit
 ) {
-    var selectedOption by remember { mutableStateOf(true) }
+    var selectedOption by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier.fillMaxWidth().padding(top = 30.dp),
@@ -132,7 +136,7 @@ fun MultiToggleButton(
                     )
                     .border(
                         width = 5.dp,
-                        color = if (selectedOption) Nct else Color.Transparent,
+                        color = if (!selectedOption) Nct else Color.Transparent,
                         shape = RoundedCornerShape(4.dp)
                     )
                     .clickable {
@@ -153,7 +157,7 @@ fun MultiToggleButton(
                     )
                     .border(
                         width = 5.dp,
-                        color = if (!selectedOption) Nct else Color.Transparent,
+                        color = if (selectedOption) Nct else Color.Transparent,
                         shape = RoundedCornerShape(4.dp)
                     )
                     .clickable {

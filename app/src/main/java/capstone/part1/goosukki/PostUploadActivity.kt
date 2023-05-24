@@ -1,6 +1,5 @@
 package capstone.part1.goosukki
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -56,7 +55,7 @@ fun PostUploadScreen() {
             SecondUploadScreen(navController = navController)
         }
         composable("thirdScreen") {
-            ThirdUploadScreen()
+            ThirdUploadScreen(navController = navController)
         }
     }
 
@@ -93,6 +92,7 @@ fun AppBar(ScreenName: String, @Nullable onBackClicked: (() -> Unit)? = null) {
 
     }
 }
+
 
 
 @Preview(showBackground = true)

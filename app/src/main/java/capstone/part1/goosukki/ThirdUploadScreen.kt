@@ -3,10 +3,13 @@ package capstone.part1.goosukki
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -20,9 +23,10 @@ import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
-fun ThirdUploadScreen() {
+fun ThirdUploadScreen(navController: NavController) {
+
     Scaffold(
-        topBar = { AppBar("위치 등록", onBackClicked = {}) },
+        topBar = { AppBar("위치 등록", onBackClicked = { navController.popBackStack() }) },
         modifier = Modifier.fillMaxSize(),
         backgroundColor = BgGrey,
     ) {
@@ -31,6 +35,7 @@ fun ThirdUploadScreen() {
             .padding(start = 30.dp, end = 30.dp)
             .padding(vertical = it.calculateBottomPadding())
         ) {
+            val locationNameState = remember { mutableStateOf(TextFieldValue()) }
 
             // 여기 사용자 현재 위치 알아오는 코드
             val current = LatLng(37.5664759, 126.9483797)
@@ -66,11 +71,11 @@ fun ThirdUploadScreen() {
 
             // 제목 입력 창
             TextField(
-                value = "",
+                value = locationNameState.value,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 20.dp),
-                onValueChange = {},
+                onValueChange = { locationNameState.value = it},
                 colors = TextFieldDefaults.textFieldColors(
                     backgroundColor = Color.Transparent,
                     textColor = Color.White,

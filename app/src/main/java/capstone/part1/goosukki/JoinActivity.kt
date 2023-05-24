@@ -56,7 +56,7 @@ class JoinActivity : AppCompatActivity() {
 
         // MainActivity로 이동 (임시 버튼 - 곧 삭제 예정)
         binding.goToMainBtn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, PostUploadActivity::class.java)
             startActivity(intent)
         }
 

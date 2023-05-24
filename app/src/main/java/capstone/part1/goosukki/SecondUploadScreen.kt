@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -35,6 +36,8 @@ import capstone.part1.goosukki.ui.theme.BgGrey
 import capstone.part1.goosukki.ui.theme.Nct
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPagerIndicator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -43,9 +46,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun SecondUploadScreen(navController: NavController) {
 
-
     Scaffold(
-        topBar = { AppBar("캡션 추가", onBackClicked = {}) },
+        topBar = { AppBar("캡션 추가", onBackClicked = { navController.popBackStack() }) },
         modifier = Modifier.fillMaxSize(),
         backgroundColor = BgGrey,
     ) {
@@ -53,7 +55,7 @@ fun SecondUploadScreen(navController: NavController) {
             .fillMaxSize()
             .padding(vertical = it.calculateBottomPadding())
         ) {
-
+            val captionState = remember { mutableStateOf(TextFieldValue()) }
 
             Box(
                 modifier = Modifier
@@ -62,6 +64,24 @@ fun SecondUploadScreen(navController: NavController) {
                     .padding(horizontal = 10.dp, vertical = 30.dp) // 여백 크기 조정
             ) {
                 MultiplePhotoPicker()
+
+                TextField(
+                    value = captionState.value,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 400.dp, start = 30.dp, end = 30.dp),
+                    onValueChange = { captionState.value = it},
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = Color.Transparent,
+                        textColor = Color.White,
+                        cursorColor = Color.White,
+                        placeholderColor = Color.LightGray,
+                        focusedIndicatorColor = Color.White, // 밑줄 색상을 흰색으로 설정
+                        unfocusedIndicatorColor = Color.White // 밑줄 색상을 흰색으로 설정
+                    ),
+                    placeholder = { Text(text = "캡션을 입력해주세요", color = Color.LightGray)}
+
+                )
             }
 
             Button(
@@ -101,12 +121,14 @@ fun MultiplePhotoPicker() {
     if (selectedImageUris.isNotEmpty()) {
         // 선택된 이미지가 있는 경우에만 ViewPager 표시
         HorizontalPagerWithImages(selectedImageUris)
+
+
     }
 }
 
 
 
-@OptIn(ExperimentalCoilApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalCoilApi::class, ExperimentalFoundationApi::class, ExperimentalPagerApi::class)
 @Composable
 fun HorizontalPagerWithImages(images: List<Uri>) {
     val pagerState = rememberPagerState()
@@ -138,11 +160,15 @@ fun HorizontalPagerWithImages(images: List<Uri>) {
                     painter = rememberImagePainter(imageUri),
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds,
-                    modifier = Modifier.fillMaxWidth().aspectRatio(1f, true)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f, true)
                 )
             }
         }
     }
+
+
 }
 
 
