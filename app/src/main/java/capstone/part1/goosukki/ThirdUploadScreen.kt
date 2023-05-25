@@ -12,6 +12,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import capstone.part1.goosukki.ui.theme.BgGrey
 import capstone.part1.goosukki.ui.theme.Nct
@@ -23,7 +25,7 @@ import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
-fun ThirdUploadScreen(navController: NavController) {
+fun ThirdUploadScreen(navController: NavController, viewModel: PostUploadViewModel = viewModel()) {
 
     Scaffold(
         topBar = { AppBar("위치 등록", onBackClicked = { navController.popBackStack() }) },
@@ -35,7 +37,7 @@ fun ThirdUploadScreen(navController: NavController) {
             .padding(start = 30.dp, end = 30.dp)
             .padding(vertical = it.calculateBottomPadding())
         ) {
-            val locationNameState = remember { mutableStateOf(TextFieldValue()) }
+            // val locationNameState = remember { mutableStateOf(TextFieldValue()) }
 
             // 여기 사용자 현재 위치 알아오는 코드
             val current = LatLng(37.5664759, 126.9483797)
@@ -43,7 +45,8 @@ fun ThirdUploadScreen(navController: NavController) {
                 position = CameraPosition.fromLatLngZoom(current, 17f)
             }
             GoogleMap(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .aspectRatio(1f)
                     .padding(top = 30.dp),
                 cameraPositionState = cameraPositionState
@@ -71,11 +74,11 @@ fun ThirdUploadScreen(navController: NavController) {
 
             // 제목 입력 창
             TextField(
-                value = locationNameState.value,
+                value = viewModel.locationName.value,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 20.dp),
-                onValueChange = { locationNameState.value = it},
+                onValueChange = { viewModel.locationName.value = it},
                 colors = TextFieldDefaults.textFieldColors(
                     backgroundColor = Color.Transparent,
                     textColor = Color.White,

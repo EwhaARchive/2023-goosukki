@@ -24,13 +24,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import capstone.part1.goosukki.ui.theme.BgGrey
 import capstone.part1.goosukki.ui.theme.GoosukkiTheme
 import capstone.part1.goosukki.ui.theme.Nct
 
 @Composable
-fun FirstUploadScreen(navController: NavController) {
+fun FirstUploadScreen(navController: NavController, viewModel: PostUploadViewModel = viewModel()) {
 
 
     val titleTextStyle = TextStyle(
@@ -50,8 +52,6 @@ fun FirstUploadScreen(navController: NavController) {
             .padding(vertical = it.calculateBottomPadding())
         ) {
 
-            val textState = remember { mutableStateOf(TextFieldValue()) }
-
             // 제목
             Text(
                 text = "제목",
@@ -62,11 +62,11 @@ fun FirstUploadScreen(navController: NavController) {
 
             // 제목 입력 창
             TextField(
-                value = textState.value,
+                value = viewModel.titleText.value,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 20.dp),
-                onValueChange = { textState.value = it },
+                onValueChange = { viewModel.titleText.value = it },
                 colors = TextFieldDefaults.textFieldColors(
                     backgroundColor = Color.Transparent,
                     textColor = Color.White,
@@ -115,9 +115,11 @@ fun FirstUploadScreen(navController: NavController) {
 // 전체공개/ 비공개 선택
 @Composable
 fun MultiToggleButton(
-    onItemSelected: (Boolean) -> Unit
+    onItemSelected: (Boolean) -> Unit,
+    viewModel: PostUploadViewModel = viewModel()
 ) {
-    var selectedOption by remember { mutableStateOf(false) }
+    // 전체 공개일 경우 secret : false, 비공개일 경우 secret: true
+    // var selectedOption by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier.fillMaxWidth().padding(top = 30.dp),
@@ -136,11 +138,11 @@ fun MultiToggleButton(
                     )
                     .border(
                         width = 5.dp,
-                        color = if (!selectedOption) Nct else Color.Transparent,
+                        color = if (!viewModel.isSecret.value) Nct else Color.Transparent,
                         shape = RoundedCornerShape(4.dp)
                     )
                     .clickable {
-                        selectedOption = false
+                        viewModel.isSecret.value = false
                         onItemSelected(false)
                     }
                     .padding(10.dp),
@@ -157,11 +159,11 @@ fun MultiToggleButton(
                     )
                     .border(
                         width = 5.dp,
-                        color = if (selectedOption) Nct else Color.Transparent,
+                        color = if (viewModel.isSecret.value) Nct else Color.Transparent,
                         shape = RoundedCornerShape(4.dp)
                     )
                     .clickable {
-                        selectedOption = true
+                        viewModel.isSecret.value = true
                         onItemSelected(true)
                     }
                     .padding(10.dp),

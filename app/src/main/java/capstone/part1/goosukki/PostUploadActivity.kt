@@ -17,6 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -46,16 +47,18 @@ class PostUploadActivity : ComponentActivity() {
 fun PostUploadScreen() {
 
     val navController = rememberNavController()
+    val viewModel: PostUploadViewModel = viewModel() // 첫 번째 화면에서 생성
+
 
     NavHost(navController = navController, startDestination = "firstScreen") {
         composable("firstScreen") {
-            FirstUploadScreen(navController = navController)
+            FirstUploadScreen(navController = navController, viewModel = viewModel)
         }
         composable("secondScreen") {
-            SecondUploadScreen(navController = navController)
+            SecondUploadScreen(navController = navController, viewModel = viewModel)
         }
         composable("thirdScreen") {
-            ThirdUploadScreen(navController = navController)
+            ThirdUploadScreen(navController = navController, viewModel = viewModel)
         }
     }
 

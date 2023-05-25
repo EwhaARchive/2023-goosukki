@@ -69,7 +69,7 @@ class JoinActivity : AppCompatActivity() {
         // - baseURL(로컬 서버의 경우)은 현재 서버 코드에 접속하고 있는 IPv4 주소로 설정
         // 로깅 인터셉터 추가
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://10.200.29.137:8080")
+            .baseUrl("http://43.200.243.113:8081")
             .addConverterFactory(GsonConverterFactory.create())
             .client(
                 OkHttpClient.Builder()
