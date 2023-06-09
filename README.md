@@ -44,7 +44,7 @@ ii) 우리팀의 AWS EC2 서버 데이터
 
 ### 2. Unity as a Library (UaaL)
 
-아래 블로그에 자세히 정리해두었습니다. 참고 부탁드립니다.
+아래 블로그에 자세히 정리해두었습니다. 참고 부탁드립니다. </br>
 https://velog.io/@neoseurae12/UaaL-Unity%EB%A5%BC-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC%EB%A1%9C-%ED%91%9C%EC%A4%80-Android-%EC%95%B1%EC%97%90-%ED%86%B5%ED%95%A9%ED%95%98%EA%B8%B0
 
 
