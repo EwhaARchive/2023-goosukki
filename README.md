@@ -49,3 +49,39 @@ https://velog.io/@neoseurae12/UaaL-Unity%EB%A5%BC-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB
 
 
 ## Android 파트
+
+### 1. 사용 언어
+![Kotlin](https://img.shields.io/badge/kotlin-%237F52FF.svg?style=for-the-badge&logo=kotlin&logoColor=white)
+(게시물 등록 screen의 경우 jetpack compose 사용)
+
+### 2. 사용 기술
+google map API, retrofit 라이브러리
+
+### 3. 화면 구성
+#### 회원가입/ 로그인 화면
+<img src="https://github.com/EwhaARchive/2023-goosukki/assets/81233784/f179fb35-f54e-458a-802c-29ae6f9d2448" width="20%">
+<img src="https://github.com/EwhaARchive/2023-goosukki/assets/81233784/0e581807-6129-4a2f-b4c9-d7f6b906cbc2" width="20%">
+
+- 아이디, 닉네임, 비밀번호, 프로필 이미지를 등록하고 로그인합니다.
+
+#### 홈 화면
+
+- 지도에 게시물 대략적인 위치가 표시되며, 게시물 근처로 이동 시 AR카메라 화면으로 넘어갈 수 있는 창 생성됩니다.
+
+#### AR 카메라 화면
+<img src="https://github.com/EwhaARchive/2023-goosukki/assets/81233784/e6426765-0393-476a-aa5d-0e10fd5c915a" width="20%">
+
+- 유니티와 연동한 화면으로 게시물 위치에서 카메라를 키면 비둘기 AR을 보실 수 있습니다.
+
+#### 유저 화면
+- 유저 정보, 유저가 쓴 게시물 내용 확인이 가능합니다.
+#### 게시물 등록 화면
+<img src="https://github.com/EwhaARchive/2023-goosukki/assets/81233784/126a461e-155b-42e9-ae64-164d8c322e0d" width="20%">
+<img src="https://github.com/EwhaARchive/2023-goosukki/assets/81233784/f3b34498-5cc6-430e-9e6a-4528c410a496" width="20%">
+<img src="https://github.com/EwhaARchive/2023-goosukki/assets/81233784/e678d58e-e88f-4e5a-83ab-d8cc8c1587aa" width="20%">
+
+- 제목, 공개범위, 이미지, 캡션, 현재 위치, 장소명 입력하면 게시물이 생성되며 비둘기 AR을 보실 수 있습니다.
+#### 게시물 상세 화면
+<img src="https://github.com/EwhaARchive/2023-goosukki/assets/81233784/dd4e3f42-cb31-4e7a-b5ea-695db61a45d0" width="20%" >
+
+- 게시물 내용 전체를 확인하실 수 있습니다.
